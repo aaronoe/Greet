@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "612140555257",
+    "firebase_url": "https://greet-554b4.firebaseio.com",
+    "project_id": "greet-554b4",
+    "storage_bucket": "greet-554b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612140555257:android:72a56467b2201bc2",
+        "android_client_info": {
+          "package_name": "de.aaronoe.greet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612140555257-o3m0gs97bfg0601svobgqhqar4um19or.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.aaronoe.greet",
+            "certificate_hash": "2c1bfb7709464c9464976483f5785300efee2cda"
+          }
+        },
+        {
+          "client_id": "612140555257-e45bk2hgpqdr0pfja7oisflng1dr2o56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMxNNMF-k7J4KDCU3ufvcJCoYeV3WahIA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612140555257-e45bk2hgpqdr0pfja7oisflng1dr2o56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
