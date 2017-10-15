@@ -22,9 +22,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.aaronoe.greet.model.User;
+import de.aaronoe.greet.repository.FireStore;
 import de.aaronoe.greet.ui.MainActivity;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -116,6 +119,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null && user.getPhotoUrl() != null) {
+                                User us = new User(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString(), user.getEmail());
+                                FireStore.setUser(FirebaseFirestore.getInstance(), us);
+                            }
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

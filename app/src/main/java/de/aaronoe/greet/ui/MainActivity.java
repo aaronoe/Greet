@@ -5,9 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import de.aaronoe.greet.LoginActivity;
 import de.aaronoe.greet.R;
+import de.aaronoe.greet.repository.FireStore;
 
 public class MainActivity extends AppCompatActivity {
 
