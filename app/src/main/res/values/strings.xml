@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Greet</string>
+    <string name="no_groups_explaination">You haven\'t joined any groups yet. You can do so by clicking here and search for one or by just creating a new one. Have fun!</string>
+    <string name="no_groups_found">No groups found</string>
+    <string name="create_group_button">Create Group</string>
+    <string name="join_group">Join Group</string>
 </resources>

@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.UUID;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.aaronoe.greet.model.User;

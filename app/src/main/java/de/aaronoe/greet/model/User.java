@@ -1,6 +1,8 @@
 package de.aaronoe.greet.model;
 
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class User {
 
     public User(String userID, String profileName, String pictureUrl, String emailAdress) {
@@ -8,6 +10,15 @@ public class User {
         this.profileName = profileName;
         this.pictureUrl = pictureUrl;
         this.emailAdress = emailAdress;
+    }
+
+    public User(FirebaseUser firebaseUser) {
+        this.userID = firebaseUser.getUid();
+        this.profileName = firebaseUser.getDisplayName();
+        if (firebaseUser.getPhotoUrl() != null) {
+            this.pictureUrl = firebaseUser.getPhotoUrl().toString();
+        }
+        this.emailAdress = firebaseUser.getEmail();
     }
 
     private String userID;
