@@ -4,9 +4,6 @@
     android:orientation="vertical"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?attr/selectableItemBackground"
     app:cardCornerRadius="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

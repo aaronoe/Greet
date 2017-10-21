@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class User {
 
+    public User() {}
+
     public User(String userID, String profileName, String pictureUrl, String emailAdress) {
         this.userID = userID;
         this.profileName = profileName;

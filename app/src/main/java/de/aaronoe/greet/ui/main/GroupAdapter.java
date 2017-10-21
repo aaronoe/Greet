@@ -17,6 +17,15 @@ import de.aaronoe.greet.model.Group;
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
 
     private List<Group> mGroups;
+    private GroupClickCallback mCallback;
+
+    public interface GroupClickCallback {
+        void onGroupClick(Group group);
+    }
+
+    public GroupAdapter(GroupClickCallback clickCallback) {
+        mCallback = clickCallback;
+    }
 
     public void setGroups(List<Group> groups) {
         mGroups = groups;
@@ -41,7 +50,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     }
 
 
-    class GroupViewHolder extends RecyclerView.ViewHolder {
+    class GroupViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.group_name_tv)
         TextView groupNameTv;
@@ -49,6 +58,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         GroupViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mCallback.onGroupClick(mGroups.get(getAdapterPosition()));
         }
     }
 

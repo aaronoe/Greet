@@ -1,27 +1,24 @@
 package de.aaronoe.greet.ui;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -30,13 +27,13 @@ import butterknife.ButterKnife;
 import de.aaronoe.greet.LoginActivity;
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
-import de.aaronoe.greet.model.Post;
 import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
+import de.aaronoe.greet.ui.detail.GroupHostActivity_;
 import de.aaronoe.greet.ui.main.GroupAdapter;
 import de.aaronoe.greet.ui.main.MainViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GroupAdapter.GroupClickCallback {
 
     private FirebaseAuth mAuth;
     private User mUser;
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        mAdapter = new GroupAdapter();
+        mAdapter = new GroupAdapter(this);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mGroupsRv.setAdapter(mAdapter);
         mGroupsRv.setLayoutManager(mLayoutManager);
@@ -126,10 +123,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_search:
+                Toast.makeText(this, "open search", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_create:
+                FireStore.createGroup(FirebaseFirestore.getInstance(), mUser, new Group("Boders"));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void goToLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
         finish();
         startActivity(intent);
+    }
+
+    @Override
+    public void onGroupClick(Group group) {
+        GroupHostActivity_.intent(this).mGroup(group).start();
     }
 }

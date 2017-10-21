@@ -4,4 +4,8 @@
     <string name="no_groups_found">No groups found</string>
     <string name="create_group_button">Create Group</string>
     <string name="join_group">Join Group</string>
+    <string name="search_groups">Search Groups</string>
+    <string name="create_new_group">Create new group</string>
+    <string name="no_posts_in_group">There are no posts in this group yet!</string>
+    <string name="no_posts_explaination">Be the first one to make a post by pressing on the add button!</string>
 </resources>

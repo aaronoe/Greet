@@ -10,6 +10,9 @@ public class Post {
     private User author;
     private String postImageUrl;
     private String postText;
+    private int numberOfComments;
+
+    public Post() {}
 
     public Post(User author, String postImageUrl, String postText) {
         this.author = author;
@@ -17,14 +20,7 @@ public class Post {
         this.postText = postText;
         this.id = UUID.randomUUID().toString();
         this.timestamp = System.currentTimeMillis();
-    }
-
-    public Post(String id, long timestamp, User author, String postImageUrl, String postText) {
-        this.id = id;
-        this.timestamp = timestamp;
-        this.author = author;
-        this.postImageUrl = postImageUrl;
-        this.postText = postText;
+        this.numberOfComments = 0;
     }
 
     public String getId() {
@@ -65,5 +61,13 @@ public class Post {
 
     public void setPostText(String postText) {
         this.postText = postText;
+    }
+
+    public int getNumberOfComments() {
+        return numberOfComments;
+    }
+
+    public void setNumberOfComments(int numberOfComments) {
+        this.numberOfComments = numberOfComments;
     }
 }

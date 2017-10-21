@@ -1,31 +1,32 @@
 package de.aaronoe.greet.model;
 
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Group {
+public class Group implements Serializable {
 
-    private String groupdId;
+    private String groupId;
     private String groupName;
 
     public Group() {}
 
     public Group(String groupdId, String groupName) {
-        this.groupdId = groupdId;
+        this.groupId = groupdId;
         this.groupName = groupName;
     }
 
     public Group(String groupName) {
         this.groupName = groupName;
-        this.groupdId = UUID.randomUUID().toString();
+        this.groupId = UUID.randomUUID().toString();
     }
 
-    public String getGroupdId() {
-        return groupdId;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setGroupdId(String groupdId) {
-        this.groupdId = groupdId;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public String getGroupName() {
