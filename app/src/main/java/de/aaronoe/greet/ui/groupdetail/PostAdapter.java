@@ -1,6 +1,7 @@
 package de.aaronoe.greet.ui.groupdetail;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private PostClickCallback mCallback;
 
     interface PostClickCallback {
-        void onPostClick(Post post, CircleImageView imageView);
+        void onPostClick(Post post, CardView view, ImageView iv);
     }
 
     public PostAdapter(Context context, PostClickCallback clickCallback) {
@@ -69,6 +70,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         TextView mPostTextView;
         @BindView(R.id.post_image_iv)
         ImageView mPostImageView;
+        @BindView(R.id.post_item_card)
+        CardView mCardRoot;
 
         PostViewHolder(View itemView) {
             super(itemView);
@@ -78,7 +81,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         @Override
         public void onClick(View v) {
-            mCallback.onPostClick(postList.get(getAdapterPosition()), mAuthorImageView);
+            mCallback.onPostClick(postList.get(getAdapterPosition()), mCardRoot, mPostImageView);
         }
 
         void bind(Context context, Post post) {
@@ -88,7 +91,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     .into(mAuthorImageView);
 
             mAuthorNameTv.setText(post.getAuthor().getProfileName());
-            mDateTextView.setText(DateUtils.convertTimestampToPostDate(post.getTimestamp()));
+            mDateTextView.setText(DateUtils.getGroupItemString(mContext, post.getTimestamp()));
             mPostTextView.setText(post.getPostText());
 
             if (post.getPostImageUrl() == null) {

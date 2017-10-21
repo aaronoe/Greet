@@ -3,6 +3,9 @@ package de.aaronoe.greet.ui.postdetail;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,12 +32,21 @@ public class PostDetailActivity extends AppCompatActivity {
     TextView mAuthorNameTv;
     @ViewById(R.id.post_date_tv)
     TextView mPostDateTv;
+    @ViewById(R.id.post_text)
+    TextView mPostTextView;
+    @ViewById(R.id.post_image_iv)
+    ImageView mPostImageView;
 
     @Extra
     Post mPost;
 
     @AfterViews
     void init() {
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         if (mPost != null) {
             mAuthorNameTv.setText(mPost.getAuthor().getProfileName());
             mPostDateTv.setText(DateUtils.getGroupItemString(this, mPost.getTimestamp()));
@@ -49,7 +61,29 @@ public class PostDetailActivity extends AppCompatActivity {
                             supportStartPostponedEnterTransition();
                         }
                     });
+
+            mPostTextView.setText(mPost.getPostText());
+
+            if (mPost.getPostImageUrl() == null) {
+                mPostImageView.setVisibility(View.GONE);
+            } else {
+                mPostImageView.setVisibility(View.VISIBLE);
+                Glide.with(this)
+                        .load(mPost.getPostImageUrl())
+                        .into(mPostImageView);
+            }
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

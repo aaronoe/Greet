@@ -20,4 +20,5 @@
     <string name="yesterday">YESTERDAY</string>
     <string name="user_created_group">%s created the group</string>
     <string name="transition_author_iv">KEY_AUTHOR_IV_TRANSITION</string>
+    <string name="transition_key_post_image">KEY_POST_IMAGE</string>
 </resources>

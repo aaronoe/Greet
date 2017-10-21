@@ -1,48 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="16dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/post_author_iv"
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:transitionName="@string/transition_author_iv"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/photo" />
+            app:cardElevation="2dp">
 
-        <TextView
-            android:id="@+id/author_name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:maxLines="1"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            app:layout_constraintLeft_toRightOf="@id/post_author_iv"
-            app:layout_constraintTop_toTopOf="@id/post_author_iv"
-            tools:text="Aaron Oertel" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/post_date_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/post_author_iv"
-            app:layout_constraintLeft_toLeftOf="@id/author_name_tv"
-            app:layout_constraintTop_toBottomOf="@id/author_name_tv"
-            tools:text="3 days ago" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    </android.support.constraint.ConstraintLayout>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/post_author_iv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/photo" />
 
-</LinearLayout>
+                    <TextView
+                        android:id="@+id/author_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:maxLines="1"
+                        android:textColor="#333333"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toRightOf="@id/post_author_iv"
+                        app:layout_constraintTop_toTopOf="@id/post_author_iv"
+                        tools:text="Aaron Oertel" />
+
+                    <TextView
+                        android:id="@+id/post_date_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@id/post_author_iv"
+                        app:layout_constraintLeft_toLeftOf="@id/author_name_tv"
+                        app:layout_constraintTop_toBottomOf="@id/author_name_tv"
+                        tools:text="3 days ago" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/post_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    tools:text="Nam non leo posuere, vestibulum metus at, consequat ex. Donec blandit quam nisi. Mauris accumsan semper iaculis. Aliquam blandit sit amet erat et suscipit. Sed non dapibus nulla. Nunc ultricies leo vitae velit pellentesque consequat. Quisque finibus purus ut erat facilisis porta vitae ut nunc." />
+
+                <ImageView
+                    android:id="@+id/post_image_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:scaleType="centerCrop"
+                    android:transitionName="@string/transition_key_post_image"
+                    android:visibility="gone"
+                    tools:src="@drawable/login_background" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>
+
