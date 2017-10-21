@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.aaronoe.greet">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.groupdetail.GroupHostActivity_"/>
+        <activity
+            android:theme="@style/AppTheme.ActionBar"
+            android:name=".ui.newpost.NewPostActivity_"/>
     </application>
 
 </manifest>

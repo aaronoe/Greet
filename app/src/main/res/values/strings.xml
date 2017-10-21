@@ -8,4 +8,5 @@
     <string name="create_new_group">Create new group</string>
     <string name="no_posts_in_group">There are no posts in this group yet!</string>
     <string name="no_posts_explaination">Be the first one to make a post by pressing on the add button!</string>
+    <string name="new_post_toolbar">New Post</string>
 </resources>

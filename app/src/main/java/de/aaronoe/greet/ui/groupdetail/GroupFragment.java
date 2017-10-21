@@ -6,18 +6,13 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -31,8 +26,7 @@ import java.util.List;
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.Post;
-import de.aaronoe.greet.model.User;
-import de.aaronoe.greet.repository.FireStore;
+import de.aaronoe.greet.ui.newpost.NewPostActivity_;
 
 @EFragment(R.layout.group_detail)
 public class GroupFragment extends android.support.v4.app.Fragment {
@@ -98,9 +92,7 @@ public class GroupFragment extends android.support.v4.app.Fragment {
 
     @Click(R.id.fab_add)
     void addPost() {
-        FirebaseAuth mauth = FirebaseAuth.getInstance();
-        User user = new User(mauth.getCurrentUser());
-        FireStore.postToGroup(FirebaseFirestore.getInstance(), mGroup.getGroupId(), new Post(user, null, "Bodertest"));
+        NewPostActivity_.intent(this).mGroup(mGroup).start();
     }
 
     private void updateUi(List<Post> posts) {
