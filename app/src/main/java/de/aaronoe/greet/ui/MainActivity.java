@@ -29,7 +29,7 @@ import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
-import de.aaronoe.greet.ui.detail.GroupHostActivity_;
+import de.aaronoe.greet.ui.groupdetail.GroupHostActivity_;
 import de.aaronoe.greet.ui.main.GroupAdapter;
 import de.aaronoe.greet.ui.main.MainViewModel;
 

@@ -1,4 +1,4 @@
-package de.aaronoe.greet.ui.detail;
+package de.aaronoe.greet.ui.groupdetail;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -6,10 +6,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -61,7 +63,17 @@ public class GroupFragment extends android.support.v4.app.Fragment {
 
     @AfterViews
     void init() {
+
         if (mGroup != null) {
+
+            mToolbar.setTitle(mGroup.getGroupName());
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
+
             mGroupViewModel = ViewModelProviders.of(getActivity()).get(GroupViewModel.class);
             mFirebaseGroup = mGroupViewModel.getLivePosts(mGroup);
 

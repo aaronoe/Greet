@@ -1,4 +1,4 @@
-package de.aaronoe.greet.ui.detail;
+package de.aaronoe.greet.ui.groupdetail;
 
 import android.support.v7.app.AppCompatActivity;
 

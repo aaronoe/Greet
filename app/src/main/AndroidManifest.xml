@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.GroupHostActivity_"/>
+        <activity android:name=".ui.groupdetail.GroupHostActivity_"/>
     </application>
 
 </manifest>
