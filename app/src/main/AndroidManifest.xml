@@ -35,6 +35,10 @@
             android:name=".ui.search.SearchActivity_"/>
 
         <service android:name=".sync.NewPostIntentService_" />
+
+        <activity android:name=".ui.postdetail.PostDetailActivity_"
+            android:theme="@style/AppTheme.ActionBar" />
+
     </application>
 
 </manifest>

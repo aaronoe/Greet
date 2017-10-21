@@ -3,9 +3,12 @@ package de.aaronoe.greet.ui.groupdetail;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,9 +30,11 @@ import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.Post;
 import de.aaronoe.greet.ui.newpost.NewPostActivity_;
+import de.aaronoe.greet.ui.postdetail.PostDetailActivity_;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 @EFragment(R.layout.group_detail)
-public class GroupFragment extends android.support.v4.app.Fragment {
+public class GroupFragment extends android.support.v4.app.Fragment implements PostAdapter.PostClickCallback {
 
     @ViewById(R.id.heroImageView)
     ImageView mHeroImageView;
@@ -71,7 +76,7 @@ public class GroupFragment extends android.support.v4.app.Fragment {
             mGroupViewModel = ViewModelProviders.of(getActivity()).get(GroupViewModel.class);
             mFirebaseGroup = mGroupViewModel.getLivePosts(mGroup);
 
-            mPostAdapter = new PostAdapter(getContext());
+            mPostAdapter = new PostAdapter(getContext(), this);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             mPostsRv.setLayoutManager(linearLayoutManager);
             mPostsRv.setAdapter(mPostAdapter);
@@ -88,6 +93,14 @@ public class GroupFragment extends android.support.v4.app.Fragment {
                 updateUi(posts);
             }
         });
+    }
+
+    @Override
+    public void onPostClick(Post post, CircleImageView imageView) {
+        Intent intent = PostDetailActivity_.intent(this).mPost(post).get();
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), imageView, getString(R.string.transition_author_iv));
+        getActivity().startActivity(intent, options.toBundle());
     }
 
     @Click(R.id.fab_add)

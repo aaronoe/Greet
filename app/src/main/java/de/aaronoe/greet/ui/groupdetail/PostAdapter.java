@@ -24,9 +24,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     private List<Post> postList;
     private Context mContext;
+    private PostClickCallback mCallback;
 
-    public PostAdapter(Context context) {
+    interface PostClickCallback {
+        void onPostClick(Post post, CircleImageView imageView);
+    }
+
+    public PostAdapter(Context context, PostClickCallback clickCallback) {
         mContext = context;
+        mCallback = clickCallback;
     }
 
     void setPostList(List<Post> posts) {
@@ -51,7 +57,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return postList == null ? 0 : postList.size();
     }
 
-    class PostViewHolder extends RecyclerView.ViewHolder {
+    class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.post_author_iv)
         CircleImageView mAuthorImageView;
@@ -67,6 +73,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         PostViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mCallback.onPostClick(postList.get(getAdapterPosition()), mAuthorImageView);
         }
 
         void bind(Context context, Post post) {

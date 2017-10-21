@@ -19,6 +19,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/post_author_iv"
+                android:transitionName="@string/transition_author_iv"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="16dp"
