@@ -24,13 +24,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.UUID;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
-import de.aaronoe.greet.ui.MainActivity;
+import de.aaronoe.greet.ui.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 

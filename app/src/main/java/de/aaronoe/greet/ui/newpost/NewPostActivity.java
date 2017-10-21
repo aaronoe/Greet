@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +27,9 @@ import java.io.File;
 
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
+import de.aaronoe.greet.model.Post;
+import de.aaronoe.greet.model.User;
+import de.aaronoe.greet.sync.NewPostIntentService_;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
@@ -52,8 +56,12 @@ public class NewPostActivity extends AppCompatActivity {
     @Extra
     Group mGroup;
 
+    FirebaseUser mUser;
+
     @AfterViews
     void init() {
+
+        mPostEditText.setLines(5);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.new_post_toolbar);
@@ -62,7 +70,7 @@ public class NewPostActivity extends AppCompatActivity {
 
         loadPreviewImage();
 
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mUser != null) {
             mAuthorNameTv.setText(mUser.getDisplayName());
             Glide.with(this)
@@ -80,6 +88,16 @@ public class NewPostActivity extends AppCompatActivity {
     void createPost() {
         String postText = mPostEditText.getText().toString();
         if (postText.length() != 0) {
+
+            Post post = new Post(new User(mUser), previewImagePath, postText);
+
+            NewPostIntentService_
+                    .intent(getApplication())
+                    .addPostToFirestore(mGroup, post)
+                    .start();
+
+            Toast.makeText(getApplication(), "Your post is being created", Toast.LENGTH_SHORT).show();
+            finish();
 
         } else {
             Snackbar.make(mPostFrame, "Please enter some text", Snackbar.LENGTH_SHORT).show();

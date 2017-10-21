@@ -1,9 +1,12 @@
 package de.aaronoe.greet.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.auth.FirebaseUser;
 
-public class User {
+public class User implements Parcelable {
 
     public User() {}
 
@@ -60,4 +63,37 @@ public class User {
     public void setEmailAdress(String emailAdress) {
         this.emailAdress = emailAdress;
     }
+
+    protected User(Parcel in) {
+        userID = in.readString();
+        profileName = in.readString();
+        pictureUrl = in.readString();
+        emailAdress = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userID);
+        dest.writeString(profileName);
+        dest.writeString(pictureUrl);
+        dest.writeString(emailAdress);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

@@ -14,4 +14,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ElevationItem">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:stateListAnimator">@animator/raise</item>
+    </style>
+
 </resources>

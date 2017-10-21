@@ -15,7 +15,7 @@
         <activity android:name=".LoginActivity">
 
         </activity>
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.groupdetail.GroupHostActivity_"/>
+
         <activity
             android:theme="@style/AppTheme.ActionBar"
             android:name=".ui.newpost.NewPostActivity_"/>
+
+        <activity
+            android:theme="@style/AppTheme.ActionBar"
+            android:name=".ui.search.SearchActivity_"/>
+
+        <service android:name=".sync.NewPostIntentService_" />
     </application>
 
 </manifest>

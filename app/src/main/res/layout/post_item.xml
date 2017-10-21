@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?selectableItemBackground"
-    android:stateListAnimator="@animator/raise"
+    style="@style/ElevationItem"
     app:cardElevation="2dp">
 
     <LinearLayout

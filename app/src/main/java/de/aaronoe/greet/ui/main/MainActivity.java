@@ -1,4 +1,4 @@
-package de.aaronoe.greet.ui;
+package de.aaronoe.greet.ui.main;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -30,8 +30,7 @@ import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
 import de.aaronoe.greet.ui.groupdetail.GroupHostActivity_;
-import de.aaronoe.greet.ui.main.GroupAdapter;
-import de.aaronoe.greet.ui.main.MainViewModel;
+import de.aaronoe.greet.ui.search.SearchActivity_;
 
 public class MainActivity extends AppCompatActivity implements GroupAdapter.GroupClickCallback {
 
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                Toast.makeText(this, "open search", Toast.LENGTH_SHORT).show();
+                SearchActivity_.intent(this).start();
                 break;
             case R.id.menu_create:
                 FireStore.createGroup(FirebaseFirestore.getInstance(), mUser, new Group("Boders"));

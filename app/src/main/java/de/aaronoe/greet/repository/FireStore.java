@@ -20,7 +20,7 @@ public class FireStore {
     private static final String GROUP_POSTS = "GROUP_POSTS";
     private static final String USERS_GROUPS = "USERS_GROUPS";
     private static final String GROUPS_USERS = "GROUPS_USERS";
-    private static final String TIMESTAMP = "timestamp";
+
 
     public static CollectionReference getUsersReference(FirebaseFirestore fireStore) {
         return fireStore.collection(USERS);

@@ -8,10 +8,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:elevation="2dp"
         android:clickable="true"
         android:focusable="true"
@@ -58,34 +59,35 @@
                 android:id="@+id/new_post_edittext"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                tools:text="Enter a new post here"
+                android:hint="@string/start_writing"
                 android:textColor="#666666"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:lines="5"
+                android:inputType="textCapSentences|textAutoCorrect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <FrameLayout
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                android:stateListAnimator="@animator/raise"
                 android:orientation="vertical"
-                android:layout_width="40dp"
-                android:layout_height="40dp">
+                android:layout_width="48dp"
+                android:layout_height="48dp">
 
                 <ImageView
+                    style="@style/ElevationItem"
                     android:id="@+id/post_image_iv"
                     android:visibility="gone"
+                    android:scaleType="centerCrop"
                     tools:src="@drawable/login_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
                 <ImageView
+                    style="@style/ElevationItem"
                     android:id="@+id/post_add_Image"
                     android:background="@drawable/dashed_background_grey"
                     android:src="@drawable/ic_add_a_photo_24dp"
                     android:padding="12dp"
+                    android:layout_margin="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 

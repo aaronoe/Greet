@@ -9,4 +9,7 @@
     <string name="no_posts_in_group">There are no posts in this group yet!</string>
     <string name="no_posts_explaination">Be the first one to make a post by pressing on the add button!</string>
     <string name="new_post_toolbar">New Post</string>
+    <string name="start_writing">Start writing...</string>
+    <string name="no_groups_search">No groups were found for that keyword. Please try again using a different keyword or create your own group!</string>
+    <string name="search_hint">Search for groups</string>
 </resources>
