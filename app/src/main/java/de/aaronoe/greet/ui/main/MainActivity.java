@@ -71,19 +71,6 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
             mUser = new User(mAuth.getCurrentUser());
             subscribeToUserGroups();
         }
-
-        /*
-        mTestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseUser user = mAuth.getCurrentUser();
-                if (user != null && user.getPhotoUrl() != null) {
-                    User us = new User(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString(), user.getEmail());
-                    Post pst = new Post(us, "https://developer.android.com/images/systrace/frame-unselected.png", "I love boder");
-                    FireStore.postToGroup(FirebaseFirestore.getInstance(), pst);
-                }
-            }
-        }); */
     }
 
     private void subscribeToUserGroups() {

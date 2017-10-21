@@ -16,9 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -27,6 +33,7 @@ import java.util.TimerTask;
 
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
+import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.ui.main.GroupAdapter;
 
 @SuppressLint("Registered")
@@ -43,6 +50,9 @@ public class SearchActivity extends AppCompatActivity implements GroupAdapter.Gr
     ProgressBar mProgressBar;
     @ViewById(R.id.groups_rv)
     RecyclerView mGroupsRv;
+
+    @Extra
+    List<Group> mExistingGroups;
 
     private GroupAdapter mGroupAdapter;
     private boolean mFirstLoad = true;
@@ -73,8 +83,23 @@ public class SearchActivity extends AppCompatActivity implements GroupAdapter.Gr
     }
 
     @Override
-    public void onGroupClick(Group group) {
-
+    public void onGroupClick(final Group group) {
+        new LovelyStandardDialog(this)
+                .setTopColorRes(R.color.colorPrimary)
+                .setButtonsColorRes(R.color.colorAccent)
+                .setIcon(R.drawable.ic_group_add_white_24dp)
+                .setTitle(R.string.join_group_title)
+                .setMessage(R.string.join_group_message)
+                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(SearchActivity.this, getString(R.string.joining_group, group.getGroupName()), Toast.LENGTH_SHORT).show();
+                        mViewModel.joinGroup(new User(FirebaseAuth.getInstance().getCurrentUser()), group);
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
     }
 
     private void updateUi(List<Group> groups) {

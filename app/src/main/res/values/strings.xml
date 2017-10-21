@@ -12,4 +12,7 @@
     <string name="start_writing">Start writing...</string>
     <string name="no_groups_search">No groups were found for that keyword. Please try again using a different keyword or create your own group!</string>
     <string name="search_hint">Search for groups</string>
+    <string name="join_group_title">Join this group?</string>
+    <string name="join_group_message">Join this group by clicking yes. You can then open it from your homescreen!</string>
+    <string name="joining_group">Joining %s</string>
 </resources>

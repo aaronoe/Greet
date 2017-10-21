@@ -13,17 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.aaronoe.greet.model.Group;
+import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
 
 
-public class SearchViewModel extends ViewModel {
+class SearchViewModel extends ViewModel {
 
     private static final String PROPERTY_GROUP_NAME = "groupName";
 
     private MutableLiveData<List<Group>> mGroups;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-    public MutableLiveData<List<Group>> getGroups(String query) {
+    MutableLiveData<List<Group>> getGroups(String query) {
         if (mGroups == null) {
             mGroups = new MutableLiveData<>();
         }
@@ -31,6 +32,10 @@ public class SearchViewModel extends ViewModel {
             downloadGroups(query);
         }
         return mGroups;
+    }
+
+    void joinGroup(User user, Group group) {
+        FireStore.joinGroup(firestore, user, group);
     }
 
     private void downloadGroups(String query) {

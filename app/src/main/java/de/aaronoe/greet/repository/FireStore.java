@@ -60,6 +60,11 @@ public class FireStore {
         });
     }
 
+    public static void joinGroup(final FirebaseFirestore firestore, final User user, final Group group) {
+        firestore.collection(GROUPS).document(group.getGroupId()).collection(GROUPS_USERS).document(user.getUserID()).set(user);
+        firestore.collection(USERS).document(user.getUserID()).collection(USERS_GROUPS).add(group);
+    }
+
     public static void postToGroup(FirebaseFirestore firestore, String groupId, Post post) {
         firestore.collection(GROUPS).document(groupId).collection(GROUP_POSTS).document(post.getId()).set(post);
     }
