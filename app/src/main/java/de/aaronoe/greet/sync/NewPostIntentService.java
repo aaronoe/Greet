@@ -73,6 +73,9 @@ public class NewPostIntentService extends IntentService {
 
     private void addPost(Group group, Post post) {
         FireStore.postToGroup(FirebaseFirestore.getInstance(), group.getGroupId(), post);
+        // Also update the latest post in that Group
+        group.setLatestPost(post);
+        FireStore.updateGroup(FirebaseFirestore.getInstance(), group);
     }
 
     @Override

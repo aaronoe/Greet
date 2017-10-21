@@ -15,4 +15,8 @@
     <string name="join_group_title">Join this group?</string>
     <string name="join_group_message">Join this group by clicking yes. You can then open it from your homescreen!</string>
     <string name="joining_group">Joining %s</string>
+    <string name="create_group_message">Enter a name and confirm to create a new group. It will automatically appear in your homescreen</string>
+    <string name="creating_group_toast">Creating %s</string>
+    <string name="yesterday">YESTERDAY</string>
+    <string name="user_created_group">%s created the group</string>
 </resources>

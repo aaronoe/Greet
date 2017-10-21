@@ -1,5 +1,6 @@
 package de.aaronoe.greet.ui.main;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
 import java.util.List;
 
@@ -34,12 +36,11 @@ import de.aaronoe.greet.ui.search.SearchActivity_;
 
 public class MainActivity extends AppCompatActivity implements GroupAdapter.GroupClickCallback {
 
-    private FirebaseAuth mAuth;
     private User mUser;
     private MainViewModel mViewModel;
     private static final String TAG = "MainActivity";
     private GroupAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
+    private MutableLiveData<List<Group>> mLiveGroups;
 
     @BindView(R.id.empty_message_container)
     ConstraintLayout mEmptyMessageContainer;
@@ -58,12 +59,12 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        mAdapter = new GroupAdapter(this);
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mAdapter = new GroupAdapter(this, this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mGroupsRv.setAdapter(mAdapter);
         mGroupsRv.setLayoutManager(mLayoutManager);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         if (mAuth.getCurrentUser() == null) {
             goToLogin();
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
 
     private void subscribeToUserGroups() {
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mViewModel.getUserGroups(mUser).observe(this, new Observer<List<Group>>() {
+        mLiveGroups = mViewModel.getUserGroups(mUser);
+        mLiveGroups.observe(this, new Observer<List<Group>>() {
             @Override
             public void onChanged(@Nullable List<Group> groups) {
                 Log.d(TAG, "onChanged() called with: groups = [" + groups + "]");
@@ -93,8 +95,7 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
             mCreateGroupButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "Create group", Toast.LENGTH_SHORT).show();
-                    FireStore.createGroup(FirebaseFirestore.getInstance(), mUser, new Group("Boders"));
+                    onClickCreateGroup();
                 }
             });
             mJoinGroupButton.setOnClickListener(new View.OnClickListener() {
@@ -119,10 +120,10 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                SearchActivity_.intent(this).start();
+                SearchActivity_.intent(this).mExistingGroups(mLiveGroups.getValue()).start();
                 break;
             case R.id.menu_create:
-                FireStore.createGroup(FirebaseFirestore.getInstance(), mUser, new Group("Boders"));
+                onClickCreateGroup();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -138,5 +139,27 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     @Override
     public void onGroupClick(Group group) {
         GroupHostActivity_.intent(this).mGroup(group).start();
+    }
+
+    private void onClickCreateGroup() {
+        new LovelyTextInputDialog(this)
+                .setTopColorRes(R.color.colorPrimary)
+                .setIcon(R.drawable.ic_group_add_white_24dp)
+                .setTitle(getString(R.string.create_group_button))
+                .setMessage(R.string.create_group_message)
+                .setInputFilter("Invalid Name", new LovelyTextInputDialog.TextFilter() {
+                    @Override
+                    public boolean check(String text) {
+                        return !text.isEmpty();
+                    }
+                })
+                .setConfirmButton(android.R.string.ok, new LovelyTextInputDialog.OnTextInputConfirmListener() {
+                    @Override
+                    public void onTextInputConfirmed(String text) {
+                        Toast.makeText(MainActivity.this, getString(R.string.creating_group_toast, text), Toast.LENGTH_SHORT).show();
+                        FireStore.createGroup(MainActivity.this, FirebaseFirestore.getInstance(), mUser, new Group(text));
+                    }
+                })
+                .show();
     }
 }

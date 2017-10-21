@@ -1,22 +1,17 @@
 package de.aaronoe.greet.model;
 
-
-import android.os.Parcel;
-import android.os.Parcelable;
+import org.parceler.Parcel;
 
 import java.util.UUID;
 
-public class Group implements Parcelable {
+@Parcel
+public class Group {
 
     private String groupId;
     private String groupName;
+    private Post latestPost;
 
     public Group() {}
-
-    public Group(String groupdId, String groupName) {
-        this.groupId = groupdId;
-        this.groupName = groupName;
-    }
 
     public Group(String groupName) {
         this.groupName = groupName;
@@ -39,32 +34,11 @@ public class Group implements Parcelable {
         this.groupName = groupName;
     }
 
-    protected Group(Parcel in) {
-        groupId = in.readString();
-        groupName = in.readString();
+    public Post getLatestPost() {
+        return latestPost;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setLatestPost(Post latestPost) {
+        this.latestPost = latestPost;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(groupId);
-        dest.writeString(groupName);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Group> CREATOR = new Parcelable.Creator<Group>() {
-        @Override
-        public Group createFromParcel(Parcel in) {
-            return new Group(in);
-        }
-
-        @Override
-        public Group[] newArray(int size) {
-            return new Group[size];
-        }
-    };
 }

@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -24,9 +23,9 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,7 +63,7 @@ public class SearchActivity extends AppCompatActivity implements GroupAdapter.Gr
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mGroupAdapter = new GroupAdapter(this);
+        mGroupAdapter = new GroupAdapter(this, this);
         mGroupsRv.setAdapter(mGroupAdapter);
         mGroupsRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -73,7 +72,7 @@ public class SearchActivity extends AppCompatActivity implements GroupAdapter.Gr
         mViewModel.getGroups(null).observe(this, new Observer<List<Group>>() {
             @Override
             public void onChanged(@Nullable List<Group> groups) {
-                updateUi(groups);
+                updateUi(processGroups(groups));
             }
         });
 
@@ -113,6 +112,25 @@ public class SearchActivity extends AppCompatActivity implements GroupAdapter.Gr
             mGroupsRv.setVisibility(View.VISIBLE);
             mGroupAdapter.setGroups(groups);
         }
+    }
+
+    /**
+     * Not so nice method which is in O(n^2) and filters out already joined groups
+     */
+    private List<Group> processGroups(List<Group> groups) {
+        List<Group> result = new ArrayList<>();
+        for (Group usersGroup : groups) {
+            boolean userJoinedAlready = false;
+            for (Group group : mExistingGroups) {
+                if (usersGroup.getGroupId().equals(group.getGroupId())) {
+                    userJoinedAlready = true;
+                }
+            }
+            if (!userJoinedAlready) {
+                result.add(usersGroup);
+            }
+        }
+        return result;
     }
 
     @Override
