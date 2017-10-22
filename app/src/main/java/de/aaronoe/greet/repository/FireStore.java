@@ -9,8 +9,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import de.aaronoe.greet.R;
+import de.aaronoe.greet.model.Comment;
 import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.Post;
 import de.aaronoe.greet.model.User;
@@ -22,7 +24,7 @@ public class FireStore {
     private static final String GROUP_POSTS = "GROUP_POSTS";
     private static final String USERS_GROUPS = "USERS_GROUPS";
     private static final String GROUPS_USERS = "GROUPS_USERS";
-    private static final String GROUP_LATEST_POST = "latestPost";
+    private static final String POSTS_COMMENTS = "POSTS_COMMENTS";
 
 
     public static CollectionReference getUsersReference(FirebaseFirestore fireStore) {
@@ -69,12 +71,49 @@ public class FireStore {
     }
 
     public static void joinGroup(final FirebaseFirestore firestore, final User user, final Group group) {
-        firestore.collection(GROUPS).document(group.getGroupId()).collection(GROUPS_USERS).document(user.getUserID()).set(user);
-        firestore.collection(USERS).document(user.getUserID()).collection(USERS_GROUPS).add(group);
+        firestore.collection(GROUPS)
+                .document(group.getGroupId())
+                .collection(GROUPS_USERS)
+                .document(user.getUserID())
+                .set(user);
+        firestore.collection(USERS)
+                .document(user.getUserID())
+                .collection(USERS_GROUPS)
+                .document(group.getGroupId())
+                .set(group);
     }
 
     public static void postToGroup(FirebaseFirestore firestore, String groupId, Post post) {
-        firestore.collection(GROUPS).document(groupId).collection(GROUP_POSTS).document(post.getId()).set(post);
+        firestore.collection(GROUPS)
+                .document(groupId)
+                .collection(GROUP_POSTS)
+                .document(post.getId())
+                .set(post);
+    }
+
+    public static void addCommentToPost(FirebaseFirestore firestore, Group group, Post post, Comment comment) {
+        firestore.collection(GROUPS)
+                .document(group.getGroupId())
+                .collection(GROUP_POSTS)
+                .document(post.getId())
+                .collection(POSTS_COMMENTS)
+                .document(comment.getId())
+                .set(comment);
+
+        // Also update the comment count on the post
+        firestore.collection(GROUPS)
+                .document(group.getGroupId())
+                .collection(GROUP_POSTS)
+                .document(post.getId())
+                .update("numberOfComments", (post.getNumberOfComments() + 1));
+    }
+
+    public static Query getCommentsReference(FirebaseFirestore firestore, Group group, Post post) {
+        return firestore.collection(GROUPS)
+                .document(group.getGroupId())
+                .collection(GROUP_POSTS)
+                .document(post.getId())
+                .collection(POSTS_COMMENTS).orderBy("timestamp", Query.Direction.DESCENDING);
     }
 
 }

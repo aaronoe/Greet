@@ -97,7 +97,7 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
 
     @Override
     public void onPostClick(Post post, CardView view, ImageView postIv) {
-        Intent intent = PostDetailActivity_.intent(this).mPost(post).get();
+        Intent intent = PostDetailActivity_.intent(this).mPost(post).mGroup(mGroup).get();
 
         Pair<View, String> container = new Pair<>((View) view, getString(R.string.transition_author_iv));
         Pair<View, String> image = new Pair<>((View) postIv, getString(R.string.transition_key_post_image));
