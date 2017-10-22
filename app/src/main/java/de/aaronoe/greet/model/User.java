@@ -30,6 +30,7 @@ public class User  {
     private String profileName;
     private String pictureUrl;
     private String emailAdress;
+    private String messagingToken;
 
 
     public String getUserID() {
@@ -64,4 +65,11 @@ public class User  {
         this.emailAdress = emailAdress;
     }
 
+    public String getMessagingToken() {
+        return messagingToken;
+    }
+
+    public void setMessagingToken(String messagingToken) {
+        this.messagingToken = messagingToken;
+    }
 }

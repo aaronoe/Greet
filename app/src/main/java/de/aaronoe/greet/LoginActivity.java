@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +122,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null && user.getPhotoUrl() != null) {
-                                User us = new User(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString(), user.getEmail());
+                                User us = new User(user);
+                                us.setMessagingToken(FirebaseInstanceId.getInstance().getToken());
                                 FireStore.setUser(FirebaseFirestore.getInstance(), us);
                             }
                             updateUI(user);

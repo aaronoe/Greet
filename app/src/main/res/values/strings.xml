@@ -27,4 +27,9 @@
     <string name="comment_added_toast">Your comment is being added!</string>
     <string name="no_comments_yet">There are no comments yet!</string>
     <string name="comments_title">Comments:</string>
+    <string name="notification_new_comment_title">There is a new comment on your post</string>
+    <string name="new_comment_notification_body">%1$s: %2$s</string>
+    <string name="leave_reply">Leave a reply</string>
+    <string name="action_reply">Reply</string>
+    <string name="replied_to_persons_comment">Comment posted!</string>
 </resources>

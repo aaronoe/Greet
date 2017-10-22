@@ -12,6 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher_round" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
         <activity android:name=".LoginActivity">
 
         </activity>
@@ -35,6 +43,22 @@
             android:name=".ui.search.SearchActivity_"/>
 
         <service android:name=".sync.NewPostIntentService_" />
+        <service android:name=".sync.NewCommentIntentService_" />
+
+        <service
+            android:name=".sync.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:exported="true"
+            android:name=".sync.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
         <activity android:name=".ui.postdetail.PostDetailActivity_"
             android:theme="@style/AppTheme.ActionBar" />

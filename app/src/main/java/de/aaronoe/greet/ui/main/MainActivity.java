@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (getIntent().getData() != null) {
+            Log.e(TAG, "onCreate: " + getIntent().getData() );
+        }
+
         ButterKnife.bind(this);
         mAdapter = new GroupAdapter(this, this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

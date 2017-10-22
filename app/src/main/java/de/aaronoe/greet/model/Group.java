@@ -18,6 +18,11 @@ public class Group {
         this.groupId = UUID.randomUUID().toString();
     }
 
+    public Group(String groupId, String groupName) {
+        this.groupId = groupId;
+        this.groupName = groupName;
+    }
+
     public String getGroupId() {
         return groupId;
     }

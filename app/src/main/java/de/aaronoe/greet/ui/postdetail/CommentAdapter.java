@@ -66,12 +66,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         }
 
         void bind(Comment comment) {
-            mAuthorNameTv.setText(comment.getUser().getProfileName());
+            mAuthorNameTv.setText(comment.getAuthor().getProfileName());
             mCommentDateTv.setText(DateUtils.getGroupItemString(mContext, comment.getTimestamp()));
             mCommentTextTv.setText(comment.getCommentText());
 
             Glide.with(mContext)
-                    .load(comment.getUser().getPictureUrl())
+                    .load(comment.getAuthor().getPictureUrl())
                     .into(mAuthorIv);
         }
 

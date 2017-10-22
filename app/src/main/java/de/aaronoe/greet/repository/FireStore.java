@@ -10,6 +10,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
 
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Comment;
@@ -49,6 +50,10 @@ public class FireStore {
 
     public static CollectionReference getGroupPostsReference(FirebaseFirestore firestore, String groupId) {
         return firestore.collection(GROUPS).document(groupId).collection(GROUP_POSTS);
+    }
+
+    public static DocumentReference getPostReference(FirebaseFirestore firestore, Group group, String postId) {
+        return firestore.collection(GROUPS).document(group.getGroupId()).collection(GROUP_POSTS).document(postId);
     }
 
     public static void setUser(FirebaseFirestore firestore, User user) {
@@ -114,6 +119,12 @@ public class FireStore {
                 .collection(GROUP_POSTS)
                 .document(post.getId())
                 .collection(POSTS_COMMENTS).orderBy("timestamp", Query.Direction.DESCENDING);
+    }
+
+    public static void updateMessagingToken(FirebaseFirestore firestore, User user, String newToken) {
+        firestore.collection(USERS)
+                .document(user.getUserID())
+                .update("messagingToken", newToken);
     }
 
 }

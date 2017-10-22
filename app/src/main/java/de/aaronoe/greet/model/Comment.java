@@ -10,13 +10,13 @@ public class Comment {
     private String commentText;
     private long timestamp;
     private String id;
-    private User user;
+    private User author;
 
-    public Comment(String commentText, User user) {
+    public Comment(String commentText, User author) {
         this.commentText = commentText;
         this.timestamp = System.currentTimeMillis();
         this.id = UUID.randomUUID().toString();
-        this.user = user;
+        this.author = author;
     }
 
     public Comment() {}
@@ -45,11 +45,11 @@ public class Comment {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }
