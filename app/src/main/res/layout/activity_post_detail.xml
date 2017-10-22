@@ -1,17 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        >
 
-        <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            style="@style/ElevationItem"
+            android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="72dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            >
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -85,36 +95,33 @@
 
             </android.support.v7.widget.CardView>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        </android.support.design.widget.CollapsingToolbarLayout>
 
-                <TextView
-                    android:id="@+id/comments_empty_tv"
-                    android:padding="16dp"
-                    android:text="@string/no_comments_yet"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+    </android.support.design.widget.AppBarLayout>
 
-                <ProgressBar
-                    android:padding="16dp"
-                    android:id="@+id/comments_pb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+    <TextView
+        android:id="@+id/comments_empty_tv"
+        android:padding="16dp"
+        android:text="@string/no_comments_yet"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/comments_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+    <ProgressBar
+        android:padding="16dp"
+        android:id="@+id/comments_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
-            </FrameLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comments_rv"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
@@ -128,5 +135,5 @@
         app:fabSize="normal"
         app:pressedTranslationZ="6dp" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
 
