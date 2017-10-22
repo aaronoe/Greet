@@ -44,6 +44,7 @@
 
         <service android:name=".sync.NewPostIntentService_" />
         <service android:name=".sync.NewCommentIntentService_" />
+        <service android:name=".sync.SendNotificationIntentService_" />
 
         <service
             android:name=".sync.MyFirebaseInstanceIDService">
