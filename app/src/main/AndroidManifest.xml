@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".GreetApplication_"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -63,6 +64,11 @@
 
         <activity android:name=".ui.postdetail.PostDetailActivity_"
             android:theme="@style/AppTheme.ActionBar" />
+
+        <provider
+            android:authorities="de.aaronoe.greet"
+            android:name=".repository.db.PostsContentProvider"
+            android:exported="false" />
 
     </application>
 

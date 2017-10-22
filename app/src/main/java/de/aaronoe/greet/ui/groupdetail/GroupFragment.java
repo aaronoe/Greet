@@ -9,21 +9,28 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.InstanceState;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.List;
 
@@ -32,7 +39,9 @@ import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.Post;
 import de.aaronoe.greet.ui.newpost.NewPostActivity_;
 import de.aaronoe.greet.ui.postdetail.PostDetailActivity_;
+import de.aaronoe.greet.utils.WidgetPrefs_;
 
+@OptionsMenu(R.menu.group_menu)
 @EFragment(R.layout.group_detail)
 public class GroupFragment extends android.support.v4.app.Fragment implements PostAdapter.PostClickCallback {
 
@@ -51,6 +60,9 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
 
     private PostAdapter mPostAdapter;
 
+    @Pref
+    WidgetPrefs_ mWidgetPrefs;
+
     @FragmentArg
     @InstanceState
     Group mGroup;
@@ -64,6 +76,9 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
     void init() {
 
         if (mGroup != null) {
+
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+            setHasOptionsMenu(true);
 
             mToolbar.setTitle(mGroup.getGroupName());
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -106,6 +121,11 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), container, image);
         getActivity().startActivity(intent, options.toBundle());
+    }
+    
+    @OptionsItem(R.id.menu_show_widget)
+    void onClickShowInWidget() {
+        Toast.makeText(getContext(), "show in widget", Toast.LENGTH_SHORT).show();
     }
 
     @Click(R.id.fab_add)

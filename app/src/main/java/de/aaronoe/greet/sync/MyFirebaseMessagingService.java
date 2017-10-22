@@ -66,7 +66,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         FireStore.getGroupReference(FirebaseFirestore.getInstance(), groupId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (!task.isComplete() || !task.isSuccessful()) return;
+                if (!task.isComplete() || !task.isSuccessful() || !task.getResult().exists()) return;
                 final Group group = task.getResult().toObject(Group.class);
 
                 FireStore.getPostReference(FirebaseFirestore.getInstance(), group, postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
