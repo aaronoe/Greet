@@ -81,10 +81,12 @@ public class SendNotificationIntentService extends IntentService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(SendNotificationIntentService.this, DEFAULT_NOTIFICATION_CHANNEL)
                         .setSmallIcon(R.drawable.ic_logo_24dp)
-                        .setLargeIcon(getCircleBitmap(getCircleBitmap(getBitmapFromURL(commentAuthorProfile))))
+                        .setLargeIcon(getCircleBitmap(getBitmapFromURL(commentAuthorProfile)))
                         .setContentTitle(getString(R.string.notification_new_comment_title))
                         .setContentText(getString(R.string.new_comment_notification_body, commentAuthor, commentText))
                         .setAutoCancel(true)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(getString(R.string.new_comment_notification_body, commentAuthor, commentText)))
                         .setSound(defaultSoundUri)
                         .addAction(getReplyAction(group, post))
                         .setContentIntent(pendingIntent);
@@ -138,12 +140,11 @@ public class SendNotificationIntentService extends IntentService {
     private NotificationCompat.Action getReplyAction(Group group, Post post) {
 
         String replyLabel = getResources().getString(R.string.leave_reply);
-        android.support.v4.app.RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
                 .setLabel(replyLabel)
                 .build();
 
         Intent intent = NewCommentIntentService_.intent(this).addCommentToPost(group, post).get();
-        //Intent intent = AddCommentIntentService.intent(this).addCommentToPost(group, post).get();
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
 
         return new NotificationCompat.Action.Builder(R.drawable.ic_send_24dp,

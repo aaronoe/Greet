@@ -11,6 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -61,6 +64,8 @@ public class PostDetailActivity extends AppCompatActivity {
     RecyclerView mCommentsRv;
     @ViewById(R.id.comments_empty_tv)
     TextView mEmptyCommentsTv;
+    @ViewById(R.id.comments_container_frame)
+    FrameLayout mCommentsContainer;
 
     @InstanceState
     @Extra
@@ -124,6 +129,11 @@ public class PostDetailActivity extends AppCompatActivity {
                         });
             }
 
+            Animation bottomUp = AnimationUtils.loadAnimation(this,
+                    R.anim.bottom_up);
+            mCommentsContainer.startAnimation(bottomUp);
+            mCommentsContainer.setVisibility(View.VISIBLE);
+
             mCommentAdapter = new CommentAdapter(this);
             mCommentsRv.setAdapter(mCommentAdapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -142,6 +152,15 @@ public class PostDetailActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Animation bottomUp = AnimationUtils.loadAnimation(this,
+                R.anim.bottom_down);
+        mCommentsContainer.startAnimation(bottomUp);
+        mCommentsContainer.setVisibility(View.VISIBLE);
+        super.onBackPressed();
     }
 
     private void updateUi(List<Comment> comments) {
