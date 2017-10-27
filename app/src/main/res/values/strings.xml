@@ -33,4 +33,11 @@
     <string name="action_reply">Reply</string>
     <string name="replied_to_persons_comment">Comment posted!</string>
     <string name="show_in_widget">Show in Widget</string>
+    <string name="group_widet_add_title">Show posts in widget?</string>
+    <string name="group_widget_add_message">You can set this group\'s posts to be shown on a homescreen widget. Just press ok and add the widget to the homescreen.</string>
+    <string name="posts_shown_in_widget">Posts will be shown in widget</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="no_posts_available">No posts available</string>
 </resources>

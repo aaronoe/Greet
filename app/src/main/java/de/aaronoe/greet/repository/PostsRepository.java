@@ -1,38 +1,55 @@
 package de.aaronoe.greet.repository;
 
-import android.app.Application;
-import android.content.ContentValues;
+import android.database.Cursor;
+
+import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.List;
 
+import de.aaronoe.greet.GreetApplication;
 import de.aaronoe.greet.model.Post;
 import de.aaronoe.greet.repository.db.PostsContract;
+import de.aaronoe.greet.utils.WidgetPrefs_;
 
+import static de.aaronoe.greet.utils.DbUtils.getContentValuesForPost;
+
+@EBean
 public class PostsRepository {
 
+    @Pref
+    WidgetPrefs_ mWidgetPrefs;
 
-    public void updatePosts(Application application, List<Post> postList) {
+    @App
+    GreetApplication greetApplication;
 
-        application.getContentResolver().delete(PostsContract.PostEntry.CONTENT_URI, null, null);
+    public void updatePosts(List<Post> postList) {
+
+        greetApplication.getContentResolver().delete(PostsContract.PostEntry.CONTENT_URI, null, null);
 
         for (Post post : postList) {
-            application.getContentResolver().insert(PostsContract.PostEntry.CONTENT_URI, getContentValuesForPost(post));
+            greetApplication.getContentResolver().insert(PostsContract.PostEntry.CONTENT_URI, getContentValuesForPost(post));
         }
 
     }
 
-    private ContentValues getContentValuesForPost(Post post) {
-        ContentValues cv = new ContentValues();
-        cv.put(PostsContract.PostEntry.COLUMN_AUTHOR_EMAIL, post.getAuthor().getEmailAdress());
-        cv.put(PostsContract.PostEntry.COLUMN_AUTHOR_ID, post.getAuthor().getUserID());
-        cv.put(PostsContract.PostEntry.COLUMN_AUTHOR_NAME, post.getAuthor().getProfileName());
-        cv.put(PostsContract.PostEntry.COLUMN_AUTHOR_PICTURE_URL, post.getAuthor().getPictureUrl());
-        cv.put(PostsContract.PostEntry.COLUMN_POST_ID, post.getId());
-        cv.put(PostsContract.PostEntry.COLUMN_POST_TEXT, post.getPostText());
-        cv.put(PostsContract.PostEntry.COLUMN_IMAGE_URL, post.getPostImageUrl());
-        cv.put(PostsContract.PostEntry.COLUMN_NUMBER_COMMENTS, post.getNumberOfComments());
-        cv.put(PostsContract.PostEntry.COLUMN_TIMESTAMP, post.getTimestamp());
-        return cv;
+    public String getWidgetGroupName() {
+        return mWidgetPrefs.groupName().get();
+    }
+
+    /**
+     * Since this method is only going to be called from the Widget's RemoteViews service it's going to be non blocking anyways
+     * @return Cursor containing any posts
+     */
+    public Cursor getPostsCursor() {
+        return greetApplication.getContentResolver().query(
+                PostsContract.PostEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
     }
 
 }

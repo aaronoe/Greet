@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher_round" />
@@ -21,10 +20,9 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".ui.main.MainActivity"
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,44 +30,57 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.groupdetail.GroupHostActivity_"/>
-
+        <activity android:name=".ui.groupdetail.GroupHostActivity_" />
         <activity
-            android:theme="@style/AppTheme.ActionBar"
-            android:name=".ui.newpost.NewPostActivity_"/>
-
+            android:name=".ui.newpost.NewPostActivity_"
+            android:theme="@style/AppTheme.ActionBar" />
         <activity
-            android:theme="@style/AppTheme.ActionBar"
-            android:name=".ui.search.SearchActivity_"/>
+            android:name=".ui.search.SearchActivity_"
+            android:theme="@style/AppTheme.ActionBar" />
 
         <service android:name=".sync.NewPostIntentService_" />
         <service android:name=".sync.NewCommentIntentService_" />
         <service android:name=".sync.SendNotificationIntentService_" />
-
-        <service
-            android:name=".sync.MyFirebaseInstanceIDService">
+        <service android:name=".sync.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service
-            android:exported="true"
-            android:name=".sync.MyFirebaseMessagingService">
+            android:name=".sync.MyFirebaseMessagingService"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".widget.PostWidgetRemoteService" />
 
-        <activity android:name=".ui.postdetail.PostDetailActivity_"
+        <activity
+            android:name=".ui.postdetail.PostDetailActivity_"
             android:theme="@style/AppTheme.ActionBar" />
 
         <provider
-            android:authorities="de.aaronoe.greet"
             android:name=".repository.db.PostsContentProvider"
+            android:authorities="de.aaronoe.greet"
             android:exported="false" />
 
+        <receiver android:name=".widget.GroupWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/group_widget_info" />
+        </receiver>
+
+        <activity
+            android:name=".widget.GroupWidgetConfigureActivity"
+            android:theme="@style/AppTheme.ActionBar">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

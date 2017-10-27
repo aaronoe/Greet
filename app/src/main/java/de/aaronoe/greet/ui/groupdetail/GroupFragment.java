@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -125,7 +128,32 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
     
     @OptionsItem(R.id.menu_show_widget)
     void onClickShowInWidget() {
-        Toast.makeText(getContext(), "show in widget", Toast.LENGTH_SHORT).show();
+        new LovelyStandardDialog(getContext())
+                .setTopColorRes(R.color.colorPrimary)
+                .setIcon(R.drawable.ic_comment_white_24dp)
+                .setButtonsColorRes(R.color.colorAccent)
+                .setTitle(R.string.group_widet_add_title)
+                .setMessage(R.string.group_widget_add_message)
+                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (getView() != null) {
+                            Snackbar.make(getView(), R.string.posts_shown_in_widget, Snackbar.LENGTH_SHORT).show();
+                        }
+                        setWidgetInPrefs();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+    }
+
+    private void setWidgetInPrefs() {
+        mWidgetPrefs
+                .edit()
+                .groupId().put(mGroup.getGroupId())
+                .groupName().put(mGroup.getGroupName())
+                .apply();
+        // TODO: Notify widget here
     }
 
     @Click(R.id.fab_add)
