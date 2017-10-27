@@ -14,6 +14,7 @@ import de.aaronoe.greet.repository.PostsRepository;
 import de.aaronoe.greet.repository.PostsRepository_;
 import de.aaronoe.greet.ui.groupdetail.GroupHostActivity_;
 import de.aaronoe.greet.ui.main.MainActivity;
+import de.aaronoe.greet.ui.postdetail.PostDetailActivity_;
 
 /**
  * Implementation of App Widget functionality.
@@ -27,20 +28,25 @@ public class GroupWidgetProvider extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.group_widget);
-        String groupName = mRepository.getWidgetGroupName();
-        if (groupName != null) {
-            views.setTextViewText(R.id.group_name_tv, mRepository.getWidgetGroupName());
+        mRepository = PostsRepository_.getInstance_(context);
+        mGroup = mRepository.getWidgetGroup();
 
-            Intent appIntent = GroupHostActivity_.intent(context).mGroup(mGroup).get();
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.group_widget);
+        if (mGroup != null) {
+            views.setTextViewText(R.id.group_name_tv, mGroup.getGroupName());
+
+            Intent mainIntent = new Intent(context, MainActivity.class);
+            Intent groupIntent = GroupHostActivity_.intent(context).mGroup(mGroup).get();
+            Intent postIntent = PostDetailActivity_.intent(context).get();
 
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-            stackBuilder.addParentStack(MainActivity.class);
-            stackBuilder.addNextIntent(appIntent);
+            stackBuilder.addNextIntent(mainIntent);
+            stackBuilder.addNextIntent(groupIntent);
+            stackBuilder.addNextIntent(postIntent);
 
             PendingIntent appPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            views.setOnClickPendingIntent(R.id.widget_layout_main, appPendingIntent);
+            views.setPendingIntentTemplate(R.id.widget_posts_list, appPendingIntent);
         } else {
             Intent appIntent = new Intent(context, MainActivity.class);
             PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -57,8 +63,6 @@ public class GroupWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        mRepository = PostsRepository_.getInstance_(context);
-        mGroup = new Group(mRepository.getWidgetGroupName());
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
@@ -69,7 +73,7 @@ public class GroupWidgetProvider extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
         for (int appWidgetId : appWidgetIds) {
-            GroupWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
+            //GroupWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
         }
     }
 

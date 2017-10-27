@@ -16,16 +16,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -33,16 +31,15 @@ import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.List;
 
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.Post;
+import de.aaronoe.greet.repository.PostsRepository;
 import de.aaronoe.greet.ui.newpost.NewPostActivity_;
 import de.aaronoe.greet.ui.postdetail.PostDetailActivity_;
-import de.aaronoe.greet.utils.WidgetPrefs_;
 
 @OptionsMenu(R.menu.group_menu)
 @EFragment(R.layout.group_detail)
@@ -63,8 +60,8 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
 
     private PostAdapter mPostAdapter;
 
-    @Pref
-    WidgetPrefs_ mWidgetPrefs;
+    @Bean
+    PostsRepository mRepository;
 
     @FragmentArg
     @InstanceState
@@ -148,17 +145,15 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
     }
 
     private void setWidgetInPrefs() {
-        mWidgetPrefs
-                .edit()
-                .groupId().put(mGroup.getGroupId())
-                .groupName().put(mGroup.getGroupName())
-                .apply();
-        // TODO: Notify widget here
+        mRepository.selectGroupForWidget(mGroup);
     }
 
     @Click(R.id.fab_add)
     void addPost() {
-        NewPostActivity_.intent(this).mGroup(mGroup).start();
+        NewPostActivity_
+                .intent(this)
+                .mGroup(mGroup)
+                .start();
     }
 
     private void updateUi(List<Post> posts) {
@@ -167,6 +162,7 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
             mProgressBar.setVisibility(View.GONE);
             mPostsRv.setVisibility(View.GONE);
         } else {
+            mRepository.updatePosts(posts);
             mEmptyMessageContainer.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.GONE);
             mPostsRv.setVisibility(View.VISIBLE);

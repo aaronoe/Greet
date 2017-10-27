@@ -3,10 +3,15 @@ package de.aaronoe.greet.widget;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
+
+import java.util.concurrent.ExecutionException;
 
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
@@ -25,7 +30,7 @@ public class PostWidgetRemoteService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         mRepo = PostsRepository_.getInstance_(getApplicationContext());
-        mGroup = new Group(mRepo.getWidgetGroupName());
+        mGroup = mRepo.getWidgetGroup();
         return new PostsRemoteViewsFactory();
     }
 
@@ -58,24 +63,46 @@ public class PostWidgetRemoteService extends RemoteViewsService {
             Post post = DbUtils.getPostFromCursor(mPostCursor, position);
             if (post == null) return null;
 
-            RemoteViews views = new RemoteViews(getPackageName(), R.layout.post_item);
+            final RemoteViews views = new RemoteViews(getPackageName(), R.layout.post_item_widget);
 
             views.setTextViewText(R.id.author_name_tv, post.getAuthor().getProfileName());
             views.setTextViewText(R.id.post_text, post.getPostText());
             views.setTextViewText(R.id.post_date_tv, DateUtils.getGroupItemString(getApplicationContext(), post.getTimestamp()));
-            views.setImageViewUri(R.id.post_author_iv, Uri.parse(post.getAuthor().getPictureUrl()));
-
-            Intent fillIntent = PostDetailActivity_.intent(getApplicationContext()).mGroup(mGroup).mPost(post).get();
-            views.setOnClickFillInIntent(R.id.post_item_card, fillIntent);
+            try {
+                Bitmap profileIcon = Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(post.getAuthor().getPictureUrl())
+                        .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .get();
+                views.setImageViewBitmap(R.id.post_author_iv, profileIcon);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
 
             if (post.getPostImageUrl() == null) {
                 views.setViewVisibility(R.id.post_image_iv, View.GONE);
             } else {
                 views.setViewVisibility(R.id.post_image_iv, View.VISIBLE);
-                views.setImageViewUri(R.id.post_image_iv, Uri.parse(post.getPostImageUrl()));
+
+                try {
+                    Bitmap bitmap = Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(post.getPostImageUrl())
+                            .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+                    views.setImageViewBitmap(R.id.post_image_iv, bitmap);
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
-            return null;
+            Intent fillIntent = PostDetailActivity_.intent(getApplicationContext())
+                    .mGroup(mGroup)
+                    .mPost(post)
+                    .get();
+
+            views.setOnClickFillInIntent(R.id.widget_item_container, fillIntent);
+
+            return views;
         }
 
         @Override

@@ -53,7 +53,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".widget.PostWidgetRemoteService" />
+        <service
+            android:name=".widget.PostWidgetRemoteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <activity
             android:name=".ui.postdetail.PostDetailActivity_"
@@ -62,7 +65,7 @@
         <provider
             android:name=".repository.db.PostsContentProvider"
             android:authorities="de.aaronoe.greet"
-            android:exported="false" />
+            android:exported="true" />
 
         <receiver android:name=".widget.GroupWidgetProvider">
             <intent-filter>
@@ -74,6 +77,7 @@
                 android:resource="@xml/group_widget_info" />
         </receiver>
 
+        <!--
         <activity
             android:name=".widget.GroupWidgetConfigureActivity"
             android:theme="@style/AppTheme.ActionBar">
@@ -81,6 +85,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+        -->
     </application>
 
 </manifest>
