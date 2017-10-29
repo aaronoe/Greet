@@ -2,14 +2,15 @@ package de.aaronoe.greet.model;
 
 import org.parceler.Parcel;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Parcel
 public class Group {
 
-    private String groupId;
-    private String groupName;
-    private Post latestPost;
+    public String groupId;
+    public String groupName;
+    public Post latestPost;
 
     public Group() {}
 

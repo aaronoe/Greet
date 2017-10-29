@@ -56,4 +56,6 @@
     <string name="author_profile_photo">Author Profile Photo</string>
     <string name="select_a_group">Select a group</string>
     <string name="select_group_message">Click on a group on the left so show it\'s posts here. If you don\'t have any groups yet create or join one!</string>
+    <string name="search_for_groups">Search for groups</string>
+    <string name="search_groups_message">Enter a group\'s name to search for it</string>
 </resources>

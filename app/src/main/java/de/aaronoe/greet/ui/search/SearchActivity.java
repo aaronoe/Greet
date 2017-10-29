@@ -8,10 +8,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -19,16 +15,17 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
@@ -37,10 +34,9 @@ import de.aaronoe.greet.ui.main.GroupAdapter;
 
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_search)
+@OptionsMenu(R.menu.searchbar)
 public class SearchActivity extends AppCompatActivity implements GroupAdapter.GroupClickCallback {
 
-    private Timer timer = new Timer();
-    private final long DELAY = 500; // milliseconds
     private SearchViewModel mViewModel;
 
     @ViewById(R.id.search_empty_message_container)
@@ -79,6 +75,7 @@ public class SearchActivity extends AppCompatActivity implements GroupAdapter.Gr
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(null);
         }
+        onClickSearch();
     }
 
     @Override
@@ -143,60 +140,30 @@ public class SearchActivity extends AppCompatActivity implements GroupAdapter.Gr
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.searchbar, menu);
-
-        final MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-        searchView.setIconifiedByDefault(false);
-        searchView.setQueryHint(getString(R.string.search_hint));
-        searchView.setMaxWidth(100000);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if(!searchView.isIconified()) {
-                    searchView.setIconified(true);
-                }
-                searchItem.collapseActionView();
-                mViewModel.getGroups(query);
-                if (mFirstLoad) {
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    mFirstLoad = false;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                timer.cancel();
-                timer = new Timer();
-                final String text = newText;
-                timer.schedule(new TimerTask() {
+    @OptionsItem(R.id.menu_search)
+    void onClickSearch() {
+        new LovelyTextInputDialog(this)
+                .setTopColorRes(R.color.colorPrimary)
+                .setIcon(R.drawable.ic_comment_white_24dp)
+                .setTitle(R.string.search_for_groups)
+                .setMessage(R.string.search_groups_message)
+                .setInputFilter(R.string.invalid_comment, new LovelyTextInputDialog.TextFilter() {
                     @Override
-                    public void run() {
-                        if (text.equals("")) return;
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mViewModel.getGroups(text);
-                                if (mFirstLoad) {
-                                    mProgressBar.setVisibility(View.VISIBLE);
-                                    mFirstLoad = false;
-                                }
-                            }
-                        });
-
+                    public boolean check(String text) {
+                        return !text.isEmpty();
                     }
-                }, DELAY);
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
+                })
+                .setConfirmButton(android.R.string.ok, new LovelyTextInputDialog.OnTextInputConfirmListener() {
+                    @Override
+                    public void onTextInputConfirmed(String text) {
+                        mViewModel.getGroups(text);
+                        if (mFirstLoad) {
+                            mProgressBar.setVisibility(View.VISIBLE);
+                            mFirstLoad = false;
+                        }
+                    }
+                })
+                .show();
     }
+
 }
