@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
             mJoinGroupButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, R.string.join_group, Toast.LENGTH_SHORT).show();
+                    SearchActivity_.intent(MainActivity.this).mExistingGroups(mLiveGroups.getValue()).start();
                 }
             });
         } else {
