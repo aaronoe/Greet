@@ -91,15 +91,6 @@
         </service>
         <service android:name=".sync.WidgetUpdatePostsIntentService_" />
 
-        <!--
-        <activity
-            android:name=".widget.GroupWidgetConfigureActivity"
-            android:theme="@style/AppTheme.ActionBar">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-        -->
     </application>
 
 </manifest>

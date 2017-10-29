@@ -1,66 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <ProgressBar
+        android:id="@+id/group_list_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/search_empty_message_container"
+        style="@style/ElevationItem"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:visibility="gone">
 
-        <ProgressBar
-            android:id="@+id/group_list_pb"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/search_empty_message_container"
-            style="@style/ElevationItem"
+        <LinearLayout
+            android:id="@+id/empty_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:visibility="gone">
+            android:background="@drawable/dashed_background"
+            android:orientation="vertical"
+            android:padding="32dp">
 
-            <LinearLayout
-                android:id="@+id/empty_container"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dashed_background"
-                android:orientation="vertical"
-                android:padding="32dp">
+                android:layout_gravity="center"
+                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/ic_group_add_black_24dp"
+                android:text="@string/no_groups_found"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawablePadding="8dp"
-                    android:drawableTop="@drawable/ic_group_add_black_24dp"
-                    android:text="@string/no_groups_found"
-                    android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_groups_search"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/no_groups_search"
-                    android:textAlignment="center"
-                    android:textSize="16sp" />
+        </LinearLayout>
 
-            </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
-        </android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/groups_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:visibility="gone" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/groups_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:visibility="gone" />
-
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

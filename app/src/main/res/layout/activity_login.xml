@@ -34,7 +34,8 @@
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/content_description_app_icon" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"

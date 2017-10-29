@@ -12,8 +12,8 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -71,7 +71,6 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
     @InstanceState
     boolean isTabletLayout = false;
 
-    private GroupViewModel mGroupViewModel;
     private MutableLiveData<List<Post>> mFirebaseGroup;
 
     private static final String TAG = "GroupFragment";
@@ -96,12 +95,12 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
                 mToolbar.setVisibility(View.GONE);
             }
 
-            mGroupViewModel = ViewModelProviders.of(getActivity()).get(GroupViewModel.class);
+            GroupViewModel mGroupViewModel = ViewModelProviders.of(getActivity()).get(GroupViewModel.class);
             mFirebaseGroup = mGroupViewModel.getLivePosts(mGroup);
 
             mPostAdapter = new PostAdapter(getContext(), this);
-            GridLayoutManager gridLayoutManager =
-                    new GridLayoutManager(getContext(), getResources().getInteger(R.integer.post_grid_span_count));
+            StaggeredGridLayoutManager gridLayoutManager =
+                    new StaggeredGridLayoutManager(getResources().getInteger(R.integer.post_grid_span_count), StaggeredGridLayoutManager.VERTICAL);
             mPostsRv.setLayoutManager(gridLayoutManager);
             mPostsRv.setAdapter(mPostAdapter);
 

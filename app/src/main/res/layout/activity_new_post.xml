@@ -49,7 +49,7 @@
                     android:textColor="#333333"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/post_author_iv"
-                    app:layout_constraintLeft_toRightOf="@id/post_author_iv"
+                    app:layout_constraintStart_toEndOf="@id/post_author_iv"
                     app:layout_constraintTop_toTopOf="@id/post_author_iv"
                     tools:text="Aaron Oertel" />
 
@@ -77,9 +77,9 @@
                     android:id="@+id/post_image_iv"
                     android:visibility="gone"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/login_background"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/selected_image_preview" />
 
                 <ImageView
                     style="@style/ElevationItem"
@@ -89,7 +89,8 @@
                     android:padding="12dp"
                     android:layout_margin="4dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/select_photo_button" />
 
             </FrameLayout>
 

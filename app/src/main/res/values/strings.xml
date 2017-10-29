@@ -9,7 +9,7 @@
     <string name="no_posts_in_group">There are no posts in this group yet!</string>
     <string name="no_posts_explaination">Be the first one to make a post by pressing on the add button!</string>
     <string name="new_post_toolbar">New Post</string>
-    <string name="start_writing">Start writing...</string>
+    <string name="start_writing">Start writing…</string>
     <string name="no_groups_search">No groups were found for that keyword. Please try again using a different keyword or create your own group!</string>
     <string name="search_hint">Search for groups</string>
     <string name="join_group_title">Join this group?</string>
@@ -34,7 +34,7 @@
     <string name="replied_to_persons_comment">Comment posted!</string>
     <string name="show_in_widget">Show in Widget</string>
     <string name="group_widet_add_title">Show posts in widget?</string>
-    <string name="group_widget_add_message">You can set this group\'s posts to be shown on a homescreen widget. Just press ok and add the widget to the homescreen.</string>
+    <string name="group_widget_add_message">You can set this group\'s posts to be shown on a homescreen widget. Just press OK and add the widget to the homescreen.</string>
     <string name="posts_shown_in_widget">Posts will be shown in widget</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
@@ -48,4 +48,12 @@
     <string name="confirm_selection">Confirm selection</string>
     <string name="select_widget_group">Select widget group</string>
     <string name="select_group_for_widget_long">Select a group to be shown in the widget</string>
+    <string name="content_description_app_icon">App Icon</string>
+    <string name="selected_image_preview">Selected image preview</string>
+    <string name="select_photo_button">Select photo button</string>
+    <string name="post_image">Post Image</string>
+    <string name="sync_widget_data">Sync Widget data</string>
+    <string name="author_profile_photo">Author Profile Photo</string>
+    <string name="select_a_group">Select a group</string>
+    <string name="select_group_message">Click on a group on the left so show it\'s posts here. If you don\'t have any groups yet create or join one!</string>
 </resources>

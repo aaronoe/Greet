@@ -34,7 +34,7 @@
                 android:maxLines="1"
                 android:textColor="#333333"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toRightOf="@id/post_author_iv"
+                app:layout_constraintStart_toEndOf="@id/post_author_iv"
                 app:layout_constraintTop_toTopOf="@id/post_author_iv"
                 tools:text="Aaron Oertel" />
 
@@ -45,7 +45,7 @@
                 android:maxLines="1"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/post_author_iv"
-                app:layout_constraintLeft_toLeftOf="@id/author_name_tv"
+                app:layout_constraintStart_toStartOf="@id/author_name_tv"
                 app:layout_constraintTop_toBottomOf="@id/author_name_tv"
                 tools:text="3 days ago" />
 

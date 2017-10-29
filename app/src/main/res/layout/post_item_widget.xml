@@ -16,7 +16,8 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_margin="16dp"
-            tools:src="@drawable/photo" />
+            tools:src="@drawable/photo"
+            android:contentDescription="@string/author_profile_photo" />
 
         <TextView
             android:id="@+id/author_name_tv"
@@ -57,6 +58,6 @@
         android:scaleType="centerCrop"
         android:transitionName="@string/transition_key_post_image"
         android:visibility="gone"
-        tools:src="@drawable/login_background" />
+        android:contentDescription="@string/post_image" />
 
 </LinearLayout>

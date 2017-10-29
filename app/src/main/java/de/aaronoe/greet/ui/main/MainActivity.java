@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -42,9 +41,9 @@ import de.aaronoe.greet.ui.search.SearchActivity_;
 
 public class MainActivity extends AppCompatActivity implements GroupAdapter.GroupClickCallback {
 
+    public static final String ANDROID_APPWIDGET_ACTION_APPWIDGET_CONFIGURE = "android.appwidget.action.APPWIDGET_CONFIGURE";
     private PostsRepository mRepository;
     private User mUser;
-    private MainViewModel mViewModel;
     private GroupAdapter mAdapter;
     private MutableLiveData<List<Group>> mLiveGroups;
     private boolean isConfigureWidgetScreen = false;
@@ -61,9 +60,6 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     @BindView(R.id.groups_rv)
     RecyclerView mGroupsRv;
 
-    FrameLayout mDetailFrame;
-    GroupFragment mGroupFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +67,13 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
 
         isTabletLayout = getResources().getBoolean(R.bool.isTabletLayout);
         if (isTabletLayout) {
-            mDetailFrame = findViewById(R.id.detail_pane);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detail_pane, TabletEmptyFragment_.builder().build())
+                    .commit();
         }
 
-        isConfigureWidgetScreen = Objects.equals(getIntent().getAction(), "android.appwidget.action.APPWIDGET_CONFIGURE");
+        isConfigureWidgetScreen = Objects.equals(getIntent().getAction(), ANDROID_APPWIDGET_ACTION_APPWIDGET_CONFIGURE);
 
         if (isConfigureWidgetScreen) {
 
@@ -87,12 +86,7 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
                     .setButtonsColorRes(R.color.colorAccent)
                     .setTitle(R.string.select_widget_group)
                     .setMessage(R.string.select_group_for_widget_long)
-                    .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(MainActivity.this, "positive clicked", Toast.LENGTH_SHORT).show();
-                        }
-                    })
+                    .setPositiveButton(android.R.string.ok, null)
                     .show();
         }
 
@@ -114,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     }
 
     private void subscribeToUserGroups() {
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        MainViewModel mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mLiveGroups = mViewModel.getUserGroups(mUser);
         mLiveGroups.observe(this, new Observer<List<Group>>() {
             @Override
@@ -199,10 +193,10 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
             return;
         }
         if (isTabletLayout) {
-            mGroupFragment =  GroupFragment_.builder().mGroup(group).isTabletLayout(true).build();
+            GroupFragment groupFragment =  GroupFragment_.builder().mGroup(group).isTabletLayout(true).build();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.detail_pane, mGroupFragment)
+                    .replace(R.id.detail_pane, groupFragment)
                     .commit();
             return;
         }

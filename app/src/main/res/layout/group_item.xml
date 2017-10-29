@@ -48,7 +48,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/group_name_tv"
-            tools:text="Aaron: I am excited to see Ricky Spanish in Action again! Hopefully he is coming to town soon!" />
+            tools:text="Aaron: I am excited to see Ricky Spanish in Action again! Hopefully he is coming to town soon!"
+            tools:ignore="RtlSymmetry" />
 
     </android.support.constraint.ConstraintLayout>
 
