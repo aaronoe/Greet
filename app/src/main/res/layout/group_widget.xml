@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="#bbDEDFDE">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/widget_layout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,16 +24,24 @@
 
         <TextView
             android:id="@+id/group_name_tv"
+            android:layout_toEndOf="@id/widget_img_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:textColor="@color/colorPrimaryDark"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/widget_sync_iv"
+            android:src="@drawable/ic_sync_24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

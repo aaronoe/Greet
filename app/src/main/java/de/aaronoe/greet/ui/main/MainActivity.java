@@ -10,7 +10,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +19,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,16 +32,20 @@ import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
+import de.aaronoe.greet.repository.PostsRepository;
+import de.aaronoe.greet.repository.PostsRepository_;
 import de.aaronoe.greet.ui.groupdetail.GroupHostActivity_;
 import de.aaronoe.greet.ui.search.SearchActivity_;
 
 public class MainActivity extends AppCompatActivity implements GroupAdapter.GroupClickCallback {
 
+    private PostsRepository mRepository;
     private User mUser;
     private MainViewModel mViewModel;
     private static final String TAG = "MainActivity";
     private GroupAdapter mAdapter;
     private MutableLiveData<List<Group>> mLiveGroups;
+    private boolean isConfigureWidgetScreen = false;
 
     @BindView(R.id.empty_message_container)
     ConstraintLayout mEmptyMessageContainer;
@@ -58,10 +63,29 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (getIntent().getData() != null) {
-            Log.e(TAG, "onCreate: " + getIntent().getData() );
+        isConfigureWidgetScreen = Objects.equals(getIntent().getAction(), "android.appwidget.action.APPWIDGET_CONFIGURE");
+
+        if (isConfigureWidgetScreen) {
+
+            // If the user does not select a widget and presses the back button, the widget creation is cancelled
+            setResult(RESULT_CANCELED);
+
+            new LovelyStandardDialog(this)
+                    .setTopColorRes(R.color.colorPrimary)
+                    .setIcon(R.drawable.ic_comment_white_24dp)
+                    .setButtonsColorRes(R.color.colorAccent)
+                    .setTitle(R.string.select_widget_group)
+                    .setMessage(R.string.select_group_for_widget_long)
+                    .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(MainActivity.this, "positive clicked", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .show();
         }
 
+        mRepository = PostsRepository_.getInstance_(getApplicationContext());
         ButterKnife.bind(this);
         mAdapter = new GroupAdapter(this, this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -84,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
         mLiveGroups.observe(this, new Observer<List<Group>>() {
             @Override
             public void onChanged(@Nullable List<Group> groups) {
-                Log.d(TAG, "onChanged() called with: groups = [" + groups + "]");
                 updateUi(groups);
             }
         });
@@ -105,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
             mJoinGroupButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "Join Group", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.join_group, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -141,7 +164,30 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     }
 
     @Override
-    public void onGroupClick(Group group) {
+    public void onGroupClick(final Group group) {
+        if (isConfigureWidgetScreen) {
+            new LovelyStandardDialog(this)
+                    .setTopColorRes(R.color.colorPrimary)
+                    .setIcon(R.drawable.ic_comment_white_24dp)
+                    .setButtonsColorRes(R.color.colorAccent)
+                    .setTitle(R.string.confirm_selection)
+                    .setMessage(getString(R.string.confirm_widget_dialog_message, group.getGroupName()))
+                    .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(),
+                                    getString(R.string.widget_posts_confirm_dialog, group.getGroupName()),
+                                    Toast.LENGTH_SHORT).show();
+                            mRepository.selectGroupForWidget(group);
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
+            return;
+        }
+
         GroupHostActivity_.intent(this).mGroup(group).start();
     }
 

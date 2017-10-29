@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mProgressDialog = ProgressDialog.show(this, "Logging in", "Please wait", true);
+        mProgressDialog = ProgressDialog.show(this, getString(R.string.loggin_in), getString(R.string.please_wait), true);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             firebaseAuthWithGoogle(acct);
         } else {
             // Signed out, show unauthenticated UI.
-            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.authentication_failed, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this.getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this.getApplicationContext(), R.string.authentication_failed, Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 

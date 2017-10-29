@@ -12,13 +12,14 @@ import de.aaronoe.greet.R;
 import de.aaronoe.greet.model.Group;
 import de.aaronoe.greet.repository.PostsRepository;
 import de.aaronoe.greet.repository.PostsRepository_;
+import de.aaronoe.greet.sync.WidgetUpdatePostsIntentService_;
 import de.aaronoe.greet.ui.groupdetail.GroupHostActivity_;
 import de.aaronoe.greet.ui.main.MainActivity;
 import de.aaronoe.greet.ui.postdetail.PostDetailActivity_;
 
 /**
  * Implementation of App Widget functionality.
- * App Widget Configuration implemented in {@link GroupWidgetConfigureActivity GroupWidgetConfigureActivity}
+ * App Widget Configuration implemented in {@link MainActivity}
  */
 public class GroupWidgetProvider extends AppWidgetProvider {
 
@@ -53,6 +54,10 @@ public class GroupWidgetProvider extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.widget_layout_main, appPendingIntent);
         }
 
+        Intent syncIntent = WidgetUpdatePostsIntentService_.intent(context).updatePostsForWidget().get();
+        PendingIntent syncPendingIntent = PendingIntent.getService(context, 1, syncIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.widget_sync_iv, syncPendingIntent);
+
         Intent remoteAdapterIntent = new Intent(context, PostWidgetRemoteService.class);
         views.setRemoteAdapter(R.id.widget_posts_list, remoteAdapterIntent);
         views.setEmptyView(R.id.widget_posts_list, R.id.empty_view);
@@ -66,14 +71,6 @@ public class GroupWidgetProvider extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
-    }
-
-    @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        // When the user deletes the widget, delete the preference associated with it.
-        for (int appWidgetId : appWidgetIds) {
-            //GroupWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
         }
     }
 

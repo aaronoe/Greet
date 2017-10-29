@@ -29,6 +29,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+
         </activity>
         <activity android:name=".ui.groupdetail.GroupHostActivity_" />
         <activity
@@ -76,6 +81,15 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/group_widget_info" />
         </receiver>
+
+        <service
+            android:exported="false"
+            android:name=".sync.WidgetSyncJob">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+        <service android:name=".sync.WidgetUpdatePostsIntentService_" />
 
         <!--
         <activity

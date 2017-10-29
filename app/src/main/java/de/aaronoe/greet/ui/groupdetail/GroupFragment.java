@@ -162,7 +162,6 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
             mProgressBar.setVisibility(View.GONE);
             mPostsRv.setVisibility(View.GONE);
         } else {
-            mRepository.updatePosts(posts);
             mEmptyMessageContainer.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.GONE);
             mPostsRv.setVisibility(View.VISIBLE);

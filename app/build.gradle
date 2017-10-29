@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:11.4.2'
     implementation 'com.google.firebase:firebase-storage:11.4.2'
     implementation 'com.google.firebase:firebase-messaging:11.4.2'
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.4'
 
 
     implementation 'id.zelory:compressor:2.1.0'

@@ -40,4 +40,12 @@
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
     <string name="no_posts_available">No posts available</string>
+    <string name="loggin_in">Logging in</string>
+    <string name="please_wait">Please wait</string>
+    <string name="authentication_failed">Authentication failed.</string>
+    <string name="widget_posts_confirm_dialog">Posts for %s will be shown in the widget</string>
+    <string name="confirm_widget_dialog_message">Do you want %s\' posts to be shown in the widget?</string>
+    <string name="confirm_selection">Confirm selection</string>
+    <string name="select_widget_group">Select widget group</string>
+    <string name="select_group_for_widget_long">Select a group to be shown in the widget</string>
 </resources>
