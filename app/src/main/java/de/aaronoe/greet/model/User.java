@@ -5,8 +5,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.parceler.Parcel;
 
+import java.io.Serializable;
+
 @Parcel
-public class User  {
+public class User {
 
     public User() {}
 
@@ -26,11 +28,11 @@ public class User  {
         this.emailAdress = firebaseUser.getEmail();
     }
 
-    private String userID;
-    private String profileName;
-    private String pictureUrl;
-    private String emailAdress;
-    private String messagingToken;
+    public String userID;
+    public String profileName;
+    public String pictureUrl;
+    public String emailAdress;
+    public String messagingToken;
 
 
     public String getUserID() {

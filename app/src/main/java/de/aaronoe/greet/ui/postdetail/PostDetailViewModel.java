@@ -18,11 +18,11 @@ import de.aaronoe.greet.model.Post;
 import de.aaronoe.greet.repository.FireStore;
 
 
-class PostDetailViewModel extends ViewModel {
+public class PostDetailViewModel extends ViewModel {
 
-    private MutableLiveData<List<Comment>> mCommentsLiveData;
+    public MutableLiveData<List<Comment>> mCommentsLiveData;
 
-    MutableLiveData<List<Comment>> getCommentsLiveData(Group group, Post post) {
+    public MutableLiveData<List<Comment>> getCommentsLiveData(Group group, Post post) {
         if (mCommentsLiveData == null) {
             mCommentsLiveData = new MutableLiveData<>();
             downloadComments(group, post);

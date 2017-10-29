@@ -17,13 +17,13 @@ import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
 
 
-class MainViewModel extends ViewModel {
+public class MainViewModel extends ViewModel {
 
-    private MutableLiveData<List<Group>> userGroups;
-    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    public MutableLiveData<List<Group>> userGroups;
+    public FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private User mUser;
 
-    MutableLiveData<List<Group>> getUserGroups(User user) {
+    public MutableLiveData<List<Group>> getUserGroups(User user) {
         mUser = user;
         if (userGroups == null) {
             userGroups = new MutableLiveData<>();

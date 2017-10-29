@@ -17,14 +17,14 @@ import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
 
 
-class SearchViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
 
     private static final String PROPERTY_GROUP_NAME = "groupName";
 
     private MutableLiveData<List<Group>> mGroups;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-    MutableLiveData<List<Group>> getGroups(String query) {
+    public MutableLiveData<List<Group>> getGroups(String query) {
         if (mGroups == null) {
             mGroups = new MutableLiveData<>();
         }

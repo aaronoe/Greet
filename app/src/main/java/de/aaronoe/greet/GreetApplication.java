@@ -8,9 +8,4 @@ import org.androidannotations.annotations.EApplication;
 @SuppressLint("Registered")
 @EApplication
 public class GreetApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
 }

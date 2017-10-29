@@ -5,14 +5,14 @@ import org.parceler.Parcel;
 import java.util.UUID;
 
 @Parcel
-public class Post  {
+public class Post {
 
-    private String id;
-    private long timestamp;
-    private User author;
-    private String postImageUrl;
-    private String postText;
-    private int numberOfComments;
+    public String id;
+    public long timestamp;
+    public User author;
+    public String postImageUrl;
+    public String postText;
+    public int numberOfComments;
 
     public Post() {
     }

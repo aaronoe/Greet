@@ -24,7 +24,6 @@ public class GroupViewModel extends ViewModel {
     private Group mGroup;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-
     public MutableLiveData<List<Post>> getLivePosts(Group group) {
         this.mGroup = group;
         if (mLivePosts == null) {
