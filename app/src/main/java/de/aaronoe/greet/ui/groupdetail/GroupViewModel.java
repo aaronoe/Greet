@@ -29,8 +29,8 @@ public class GroupViewModel extends ViewModel {
         this.mGroup = group;
         if (mLivePosts == null) {
             mLivePosts = new MutableLiveData<>();
-            loadPosts();
         }
+        loadPosts();
         return mLivePosts;
     }
 

@@ -12,7 +12,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -67,6 +67,10 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
     @InstanceState
     Group mGroup;
 
+    @FragmentArg
+    @InstanceState
+    boolean isTabletLayout = false;
+
     private GroupViewModel mGroupViewModel;
     private MutableLiveData<List<Post>> mFirebaseGroup;
 
@@ -77,23 +81,28 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
 
         if (mGroup != null) {
 
-            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-            setHasOptionsMenu(true);
+            if (!isTabletLayout) {
+                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                setHasOptionsMenu(true);
 
-            mToolbar.setTitle(mGroup.getGroupName());
-            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().onBackPressed();
-                }
-            });
+                mToolbar.setTitle(mGroup.getGroupName());
+                mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getActivity().onBackPressed();
+                    }
+                });
+            } else {
+                mToolbar.setVisibility(View.GONE);
+            }
 
             mGroupViewModel = ViewModelProviders.of(getActivity()).get(GroupViewModel.class);
             mFirebaseGroup = mGroupViewModel.getLivePosts(mGroup);
 
             mPostAdapter = new PostAdapter(getContext(), this);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-            mPostsRv.setLayoutManager(linearLayoutManager);
+            GridLayoutManager gridLayoutManager =
+                    new GridLayoutManager(getContext(), getResources().getInteger(R.integer.post_grid_span_count));
+            mPostsRv.setLayoutManager(gridLayoutManager);
             mPostsRv.setAdapter(mPostAdapter);
 
             subscribeToChanges();
@@ -162,6 +171,7 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
             mProgressBar.setVisibility(View.GONE);
             mPostsRv.setVisibility(View.GONE);
         } else {
+            if (mEmptyMessageContainer == null) return;
             mEmptyMessageContainer.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.GONE);
             mPostsRv.setVisibility(View.VISIBLE);

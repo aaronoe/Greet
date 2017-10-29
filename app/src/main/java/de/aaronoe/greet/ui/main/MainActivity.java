@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ import de.aaronoe.greet.model.User;
 import de.aaronoe.greet.repository.FireStore;
 import de.aaronoe.greet.repository.PostsRepository;
 import de.aaronoe.greet.repository.PostsRepository_;
+import de.aaronoe.greet.ui.groupdetail.GroupFragment;
+import de.aaronoe.greet.ui.groupdetail.GroupFragment_;
 import de.aaronoe.greet.ui.groupdetail.GroupHostActivity_;
 import de.aaronoe.greet.ui.search.SearchActivity_;
 
@@ -42,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     private PostsRepository mRepository;
     private User mUser;
     private MainViewModel mViewModel;
-    private static final String TAG = "MainActivity";
     private GroupAdapter mAdapter;
     private MutableLiveData<List<Group>> mLiveGroups;
     private boolean isConfigureWidgetScreen = false;
+    private boolean isTabletLayout = false;
 
     @BindView(R.id.empty_message_container)
     ConstraintLayout mEmptyMessageContainer;
@@ -58,10 +61,18 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
     @BindView(R.id.groups_rv)
     RecyclerView mGroupsRv;
 
+    FrameLayout mDetailFrame;
+    GroupFragment mGroupFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        isTabletLayout = getResources().getBoolean(R.bool.isTabletLayout);
+        if (isTabletLayout) {
+            mDetailFrame = findViewById(R.id.detail_pane);
+        }
 
         isConfigureWidgetScreen = Objects.equals(getIntent().getAction(), "android.appwidget.action.APPWIDGET_CONFIGURE");
 
@@ -185,6 +196,14 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
                     })
                     .setNegativeButton(android.R.string.no, null)
                     .show();
+            return;
+        }
+        if (isTabletLayout) {
+            mGroupFragment =  GroupFragment_.builder().mGroup(group).isTabletLayout(true).build();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detail_pane, mGroupFragment)
+                    .commit();
             return;
         }
 
