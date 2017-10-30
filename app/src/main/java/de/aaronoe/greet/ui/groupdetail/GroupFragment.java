@@ -81,7 +81,9 @@ public class GroupFragment extends android.support.v4.app.Fragment implements Po
         if (mGroup != null) {
 
             if (!isTabletLayout) {
-                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                if ((getActivity()) != null) {
+                    ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                }
                 setHasOptionsMenu(true);
 
                 mToolbar.setTitle(mGroup.getGroupName());

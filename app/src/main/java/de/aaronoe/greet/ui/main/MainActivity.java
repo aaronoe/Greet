@@ -38,6 +38,7 @@ import de.aaronoe.greet.ui.groupdetail.GroupFragment;
 import de.aaronoe.greet.ui.groupdetail.GroupFragment_;
 import de.aaronoe.greet.ui.groupdetail.GroupHostActivity_;
 import de.aaronoe.greet.ui.search.SearchActivity_;
+import de.aaronoe.greet.ui.widgetpreview.WidgetPreviewActivity_;
 
 public class MainActivity extends AppCompatActivity implements GroupAdapter.GroupClickCallback {
 
@@ -157,6 +158,9 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
             case R.id.menu_create:
                 onClickCreateGroup();
                 break;
+            case R.id.menu_widget_preview:
+                WidgetPreviewActivity_.intent(this).start();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -210,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements GroupAdapter.Grou
                 .setIcon(R.drawable.ic_group_add_white_24dp)
                 .setTitle(getString(R.string.create_group_button))
                 .setMessage(R.string.create_group_message)
-                .setInputFilter("Invalid Name", new LovelyTextInputDialog.TextFilter() {
+                .setInputFilter(R.string.invalid_name, new LovelyTextInputDialog.TextFilter() {
                     @Override
                     public boolean check(String text) {
                         return !text.isEmpty();

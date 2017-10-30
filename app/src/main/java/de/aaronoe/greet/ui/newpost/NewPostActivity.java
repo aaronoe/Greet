@@ -96,11 +96,11 @@ public class NewPostActivity extends AppCompatActivity {
                     .addPostToFirestore(mGroup, post)
                     .start();
 
-            Toast.makeText(getApplication(), "Your post is being created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.post_is_being_created, Toast.LENGTH_SHORT).show();
             finish();
 
         } else {
-            Snackbar.make(mPostFrame, "Please enter some text", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mPostFrame, R.string.please_enter_text, Snackbar.LENGTH_SHORT).show();
         }
     }
 

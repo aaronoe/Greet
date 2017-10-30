@@ -101,6 +101,9 @@
         </service>
         <service android:name=".sync.WidgetUpdatePostsIntentService_" />
 
+        <activity
+            android:theme="@style/AppTheme.ActionBar"
+            android:name=".ui.widgetpreview.WidgetPreviewActivity_" />
     </application>
 
 </manifest>

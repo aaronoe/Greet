@@ -58,4 +58,13 @@
     <string name="select_group_message">Click on a group on the left so show it\'s posts here. If you don\'t have any groups yet create or join one!</string>
     <string name="search_for_groups">Search for groups</string>
     <string name="search_groups_message">Enter a group\'s name to search for it</string>
+    <string name="please_enter_text">Please enter some text</string>
+    <string name="post_is_being_created">Your post is being created</string>
+    <string name="invalid_name">Invalid Name</string>
+    <string name="group_background">Group Background</string>
+    <string name="publish_post">Publish Post</string>
+    <string name="comment_on_post">Comment on this post</string>
+    <string name="create_post">Create new Post</string>
+    <string name="no_posts_saved">No Posts saved yet</string>
+    <string name="show_widget_preview">Show widget preview</string>
 </resources>

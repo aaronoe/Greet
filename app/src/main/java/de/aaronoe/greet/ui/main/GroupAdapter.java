@@ -81,7 +81,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
             Post latestPost = group.getLatestPost();
             if (latestPost != null) {
                 lastPostDateTv.setText(DateUtils.getGroupItemString(context, latestPost.getTimestamp()));
-                lastPostPreviewTv.setText(latestPost.getAuthor().getProfileName() + ": " + latestPost.getPostText());
+                lastPostPreviewTv.setText(String.format("%s: %s", latestPost.getAuthor().getProfileName(), latestPost.getPostText()));
             }
         }
     }

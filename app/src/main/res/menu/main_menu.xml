@@ -14,4 +14,7 @@
         android:title="@string/create_new_group"
         android:icon="@drawable/ic_group_add_white_24dp" />
 
+    <item app:showAsAction="never"
+        android:title="@string/show_widget_preview"
+        android:id="@+id/menu_widget_preview"/>
 </menu>
