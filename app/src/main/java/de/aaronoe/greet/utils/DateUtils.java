@@ -13,7 +13,7 @@ import de.aaronoe.greet.R;
 
 public class DateUtils {
 
-    private static final String DEFAULT_DATEFORMAT = "MMMM d, YYYY";
+    private static final String DEFAULT_DATEFORMAT = "MMMM d, yyyy";
     private static final DateFormat DEFAULT_FORMAT = new SimpleDateFormat(DEFAULT_DATEFORMAT, Locale.ENGLISH);
     private static final DateFormat TODAY_FORMAT = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
 
